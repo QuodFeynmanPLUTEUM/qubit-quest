@@ -1,0 +1,30 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: qubit-quest-backend
+    ports:
+      - "127.0.0.1:4285:4285"
+    environment:
+      - BACKEND_HOST=0.0.0.0
+      - BACKEND_PORT=4285
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:4285/api/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  frontend:
+    profiles:
+      - prod
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: qubit-quest-frontend
+    ports:
+      - "0.0.0.0:4286:4286"
+    depends_on:
+      - backend
+    restart: unless-stopped

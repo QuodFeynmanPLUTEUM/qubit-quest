@@ -48,31 +48,51 @@ For the initial version, keep the upgrades limited to one or two meaningful choi
 
 The game teaches players both how the quantum classifier works and how training choices affect its performance.
 
+---
+
+## Architecture & Directory Structure
+
+```
 qubit-quest/
-├── app.py                 # Teammate: Streamlit interface
-├── qml_model.py           # You: quantum model and training
-├── game_logic.py          # Shared: scoring and level rules
-├── requirements.txt       # Shared dependencies
-├── README.md              # Setup and project pitch
-└── .gitignore
+├── docker-compose.yml          # Default: backend (127.0.0.1:4285) | Profile "prod": + frontend Nginx (0.0.0.0:4286)
+├── backend/
+│   ├── Dockerfile
+│   ├── requirements.txt
+│   ├── run.py                  # Uvicorn server on port 4285
+│   ├── test_backend.py         # Qiskit Statevector & level progression test suite
+│   └── app/
+│       ├── main.py             # FastAPI endpoints (/api/levels, /api/train, /api/predict_grid)
+│       ├── qml_engine.py       # 2-Qubit Qiskit VQC, Data Re-Uploading, CNOT & Statevector simulator
+│       ├── datasets.py         # Deterministic 2D datasets (Blobs, Concentric Circles, Quantum XOR)
+│       └── game_rules.py       # Coherence budget, star medals, and scoring engine
+├── frontend/
+│   ├── Dockerfile              # Multi-stage Vite build + Nginx on 0.0.0.0:4286
+│   ├── nginx.conf              # Reverse proxy /api/ -> http://backend:4285/api/
+│   ├── vite.config.js          # Dev server on 0.0.0.0:4286 with /api proxy to 127.0.0.1:4285
+│   └── src/                    # React 18 + Tailwind CSS Quantum Cyberpunk UI
+├── README.md
+└── specs.md
+```
 
-TO DO FOR NOW:
+## Quick Start (Docker & Development)
 
-[ ] Create app.py with the title and game layout
-[ ] Build a level selector and circuit configuration controls
-[ ] Display the dataset and decision-boundary plot using placeholder data
-[ ] Add Train and Reset buttons with loading feedback
-[ ] Display accuracy, loss, score, and remaining training budget
-[ ] Add level completion, retry, and a basic upgrade mechanic
+### 1. Modo Desarrollo (Backend en Docker + Frontend manual con Vite)
+Sin especificar perfil, Docker levanta únicamente el **backend** escuchando exclusivamente en `127.0.0.1:4285`:
+```bash
+docker compose up -d --build
+```
+Luego levanta manualmente el **frontend** en desarrollo (escucha en `0.0.0.0:4286` con proxy hacia `127.0.0.1:4285`):
+```bash
+cd frontend
+npm install
+npm run dev
+```
+Abre `http://localhost:4286` en tu navegador.
 
-[ ] Create qml_model.py with the agreed function signatures
-[ ] Generate a small two-class training and test dataset
-[ ] Implement a parameterized Qiskit circuit and classifier
-[ ] Train it and record loss and test accuracy
-[ ] Implement prediction over a grid for the decision-boundary plot
-[ ] Test with the actual Streamlit app and document the model outputs
+### 2. Modo Producción (Perfil `prod` con Nginx)
+Con el perfil `prod`, Docker compila el frontend de React/Vite y lo sirve con **Nginx** en `0.0.0.0:4286` haciendo proxy inverso de `/api/` hacia el contenedor `backend` (`127.0.0.1:4285`):
+```bash
+docker compose --profile prod up -d --build
+```
+Abre `http://0.0.0.0:4286` en tu navegador.
 
-
-Dependencies:
-python -m pip install --upgrade pip
-python -m pip install qiskit qiskit-machine-learning qiskit-aer streamlit numpy matplotlib scikit-learn
