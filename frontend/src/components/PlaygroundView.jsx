@@ -314,13 +314,13 @@ export default function PlaygroundView({ onTrainingPulse, isTrainingGlobal }) {
                 aria-labelledby="pg-entanglement-label"
                 onClick={handleEntanglementToggle}
                 disabled={busy}
-                className={`relative w-12 h-6 rounded-full transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-qq-primary focus-visible:ring-offset-1 ${
+                className={`relative inline-flex w-12 h-6 shrink-0 self-start p-0 rounded-full transition-colors disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus-visible:ring-2 focus-visible:ring-qq-primary focus-visible:ring-offset-1 ${
                   useEntanglement ? 'bg-qq-primary' : 'bg-qq-border'
                 }`}
               >
                 <span
-                  className={`absolute top-0.5 w-5 h-5 rounded-full bg-white shadow transition-transform ${
-                    useEntanglement ? 'translate-x-6' : 'translate-x-0.5'
+                  className={`pointer-events-none absolute left-0.5 top-0.5 w-5 h-5 rounded-full bg-white shadow transition-transform ${
+                    useEntanglement ? 'translate-x-6' : 'translate-x-0'
                   }`}
                 />
               </button>
