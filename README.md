@@ -73,3 +73,8 @@ TO DO FOR NOW:
 [ ] Train it and record loss and test accuracy
 [ ] Implement prediction over a grid for the decision-boundary plot
 [ ] Test with the actual Streamlit app and document the model outputs
+
+
+Dependencies:
+python -m pip install --upgrade pip
+python -m pip install qiskit qiskit-machine-learning qiskit-aer streamlit numpy matplotlib scikit-learn
