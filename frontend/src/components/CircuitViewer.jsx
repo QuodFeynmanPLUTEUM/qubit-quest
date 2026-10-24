@@ -22,14 +22,12 @@ export default function CircuitViewer({
   };
 
   return (
-    <div className="rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md p-4 flex flex-col gap-3 shadow-xl">
+    <div className="rounded-2xl bg-qq-surface border border-qq-border shadow-card p-4 flex flex-col gap-3">
       {/* Header */}
       <div className="flex flex-wrap items-center justify-between gap-2">
         <div className="flex items-center gap-2">
-          <Cpu className="w-4 h-4 text-purple-400" />
-          <h3 className="text-sm font-bold uppercase tracking-wider text-slate-100">
-            Parameterized Quantum Circuit (2 Qubits)
-          </h3>
+          <Cpu className="w-4 h-4 text-qq-primary" />
+          <h3 className="text-sm font-extrabold text-qq-ink">Circuito Cuántico Parametrizado (2 Qubits)</h3>
         </div>
 
         <div className="flex items-center gap-1.5">
@@ -37,20 +35,20 @@ export default function CircuitViewer({
             onClick={() => setShowSliders((s) => !s)}
             className={`px-2.5 py-1 rounded-lg text-xs font-medium flex items-center gap-1 border transition ${
               showSliders
-                ? 'bg-cyan-500/15 border-cyan-400/40 text-cyan-200'
-                : 'bg-slate-900/70 border-white/10 text-slate-400'
+                ? 'bg-qq-primarySoft border-violet-200 text-qq-primary'
+                : 'bg-white border-qq-border text-qq-faint'
             }`}
           >
             <Sliders className="w-3.5 h-3.5" />
-            <span>Gate Sliders</span>
+            <span>Sliders</span>
           </button>
 
           <button
             onClick={() => setShowAscii((a) => !a)}
             className={`px-2.5 py-1 rounded-lg text-xs font-medium flex items-center gap-1 border transition ${
               showAscii
-                ? 'bg-purple-500/20 border-purple-400/40 text-purple-200'
-                : 'bg-slate-900/70 border-white/10 text-slate-400'
+                ? 'bg-teal-50 border-teal-200 text-teal-700'
+                : 'bg-white border-qq-border text-qq-faint'
             }`}
           >
             <Code2 className="w-3.5 h-3.5" />
@@ -60,15 +58,13 @@ export default function CircuitViewer({
       </div>
 
       {/* Visual Quantum Circuit Wire Diagram */}
-      <div className="bg-slate-950/90 border border-white/10 rounded-xl p-3 overflow-x-auto">
+      <div className="bg-qq-bg border border-qq-border rounded-xl p-3 overflow-x-auto">
         <div className="min-w-[460px] flex flex-col gap-4 relative py-1">
           {/* Qubit 0 Wire */}
           <div className="flex items-center gap-2 relative">
-            <span className="w-12 font-mono text-xs font-bold text-cyan-300 shrink-0">
-              q₀ |0⟩
-            </span>
+            <span className="w-12 font-mono text-xs font-bold text-qq-primary shrink-0">q₀ |0⟩</span>
             <div className="flex-1 flex items-center gap-2 relative">
-              <div className="absolute inset-x-0 h-0.5 bg-slate-700 z-0" />
+              <div className="absolute inset-x-0 h-0.5 bg-qq-border z-0" />
               {layerIndices.map((l) => {
                 const idxRy = 4 * l;
                 const idxRz = 4 * l + 2;
@@ -76,24 +72,24 @@ export default function CircuitViewer({
                 const valRz = (parameters[idxRz] ?? 0).toFixed(2);
                 return (
                   <React.Fragment key={`q0-l-${l}`}>
-                    <div className="z-10 px-2 py-1 rounded bg-sky-950 border border-sky-400/50 text-[10px] font-mono text-sky-200 shadow">
+                    <div className="z-10 px-2 py-1 rounded bg-violet-50 border border-violet-200 text-[10px] font-mono text-violet-700 shadow-sm">
                       Ry(x₀)
                     </div>
-                    <div className="z-10 px-2 py-1 rounded bg-cyan-950 border border-cyan-400/60 text-[10px] font-mono text-cyan-200 shadow">
+                    <div className="z-10 px-2 py-1 rounded bg-sky-50 border border-sky-200 text-[10px] font-mono text-sky-700 shadow-sm">
                       Ry({valRy})
                     </div>
-                    <div className="z-10 px-2 py-1 rounded bg-purple-950 border border-purple-400/60 text-[10px] font-mono text-purple-200 shadow">
+                    <div className="z-10 px-2 py-1 rounded bg-sky-50 border border-sky-200 text-[10px] font-mono text-sky-700 shadow-sm">
                       Rz({valRz})
                     </div>
                     {useEntanglement && (
-                      <div className="z-10 w-6 h-6 rounded-full bg-amber-500/20 border border-amber-400 flex items-center justify-center text-amber-300 font-bold text-xs">
+                      <div className="z-10 w-6 h-6 rounded-full bg-teal-500 border border-teal-500 flex items-center justify-center text-white font-bold text-xs">
                         ●
                       </div>
                     )}
                   </React.Fragment>
                 );
               })}
-              <div className="z-10 ml-auto px-2 py-1 rounded bg-emerald-950 border border-emerald-400/50 text-[10px] font-mono text-emerald-300">
+              <div className="z-10 ml-auto px-2 py-1 rounded bg-rose-50 border border-rose-200 text-[10px] font-mono text-rose-700">
                 ⟨Z₀⟩
               </div>
             </div>
@@ -101,11 +97,9 @@ export default function CircuitViewer({
 
           {/* Qubit 1 Wire */}
           <div className="flex items-center gap-2 relative">
-            <span className="w-12 font-mono text-xs font-bold text-purple-300 shrink-0">
-              q₁ |0⟩
-            </span>
+            <span className="w-12 font-mono text-xs font-bold text-qq-primary shrink-0">q₁ |0⟩</span>
             <div className="flex-1 flex items-center gap-2 relative">
-              <div className="absolute inset-x-0 h-0.5 bg-slate-700 z-0" />
+              <div className="absolute inset-x-0 h-0.5 bg-qq-border z-0" />
               {layerIndices.map((l) => {
                 const idxRy = 4 * l + 1;
                 const idxRz = 4 * l + 3;
@@ -113,24 +107,24 @@ export default function CircuitViewer({
                 const valRz = (parameters[idxRz] ?? 0).toFixed(2);
                 return (
                   <React.Fragment key={`q1-l-${l}`}>
-                    <div className="z-10 px-2 py-1 rounded bg-sky-950 border border-sky-400/50 text-[10px] font-mono text-sky-200 shadow">
+                    <div className="z-10 px-2 py-1 rounded bg-violet-50 border border-violet-200 text-[10px] font-mono text-violet-700 shadow-sm">
                       Ry(x₁)
                     </div>
-                    <div className="z-10 px-2 py-1 rounded bg-cyan-950 border border-cyan-400/60 text-[10px] font-mono text-cyan-200 shadow">
+                    <div className="z-10 px-2 py-1 rounded bg-sky-50 border border-sky-200 text-[10px] font-mono text-sky-700 shadow-sm">
                       Ry({valRy})
                     </div>
-                    <div className="z-10 px-2 py-1 rounded bg-purple-950 border border-purple-400/60 text-[10px] font-mono text-purple-200 shadow">
+                    <div className="z-10 px-2 py-1 rounded bg-sky-50 border border-sky-200 text-[10px] font-mono text-sky-700 shadow-sm">
                       Rz({valRz})
                     </div>
                     {useEntanglement && (
-                      <div className="z-10 w-6 h-6 rounded-full bg-amber-500/30 border border-amber-400 flex items-center justify-center text-amber-200 font-bold text-xs shadow-[0_0_10px_rgba(251,191,36,0.4)]">
+                      <div className="z-10 w-6 h-6 rounded-full bg-teal-100 border-2 border-teal-500 flex items-center justify-center text-teal-700 font-bold text-xs">
                         ⊕
                       </div>
                     )}
                   </React.Fragment>
                 );
               })}
-              <div className="z-10 ml-auto px-2 py-1 rounded bg-emerald-950 border border-emerald-400/50 text-[10px] font-mono text-emerald-300">
+              <div className="z-10 ml-auto px-2 py-1 rounded bg-rose-50 border border-rose-200 text-[10px] font-mono text-rose-700">
                 ⟨Z₁⟩
               </div>
             </div>
@@ -140,10 +134,10 @@ export default function CircuitViewer({
 
       {/* Interactive Manual Angle Sliders (0 Coherence Cost) */}
       {showSliders && (
-        <div className="bg-slate-900/75 border border-white/10 rounded-xl p-3">
-          <div className="flex items-center justify-between text-[11px] text-slate-400 mb-2">
-            <span>Ajuste Manual de Ángulos Variacionales θ (Costo: 0 Coherencia)</span>
-            <span className="font-mono text-cyan-300">[-π, +π] rad</span>
+        <div className="bg-qq-bg border border-qq-border rounded-xl p-3">
+          <div className="flex items-center justify-between text-[11px] text-qq-subtle mb-2">
+            <span>Ajuste manual de ángulos variacionales θ (Costo: 0 Coherencia)</span>
+            <span className="font-mono text-qq-primary">[-π, +π] rad</span>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 max-h-40 overflow-y-auto pr-1">
             {parameters.map((val, idx) => {
@@ -158,15 +152,12 @@ export default function CircuitViewer({
                   ? `L${layerNum} Rz(q₀)`
                   : `L${layerNum} Rz(q₁)`;
               return (
-                <div
-                  key={idx}
-                  className="bg-slate-950/80 border border-white/10 rounded-lg p-2 flex flex-col gap-1"
-                >
+                <div key={idx} className="bg-white border border-qq-border rounded-lg p-2 flex flex-col gap-1">
                   <div className="flex items-center justify-between text-[10px] font-mono">
-                    <span className="text-slate-300">
+                    <span className="text-qq-subtle">
                       θ<sub>{idx}</sub> {gateLabel}
                     </span>
-                    <span className="text-cyan-300 font-bold">{Number(val).toFixed(2)}</span>
+                    <span className="text-qq-primary font-bold">{Number(val).toFixed(2)}</span>
                   </div>
                   <input
                     type="range"
@@ -176,7 +167,7 @@ export default function CircuitViewer({
                     value={val}
                     disabled={disabled}
                     onChange={(e) => handleSliderChange(idx, e.target.value)}
-                    className="w-full accent-cyan-400 cursor-pointer h-1.5 bg-slate-800 rounded-lg"
+                    className="w-full accent-qq-primary cursor-pointer h-1.5 bg-qq-bg rounded-lg"
                   />
                 </div>
               );
@@ -187,7 +178,7 @@ export default function CircuitViewer({
 
       {/* Raw Qiskit Circuit ASCII Drawer */}
       {showAscii && circuitAscii && (
-        <pre className="bg-slate-950 border border-purple-500/30 rounded-xl p-3 text-[11px] font-mono text-purple-200 overflow-x-auto leading-snug">
+        <pre className="bg-qq-ink border border-qq-border rounded-xl p-3 text-[11px] font-mono text-violet-200 overflow-x-auto leading-snug">
           {circuitAscii}
         </pre>
       )}

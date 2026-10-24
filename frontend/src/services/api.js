@@ -80,3 +80,45 @@ export async function predictGrid({
     }),
   });
 }
+
+export async function fetchSandboxDatasets() {
+  return request('/sandbox/datasets');
+}
+
+export async function fetchSandboxData({ datasetType, noise, layers, useEntanglement, seed = 7 }) {
+  return request('/sandbox/data', {
+    method: 'POST',
+    body: JSON.stringify({
+      dataset_type: datasetType,
+      noise,
+      layers,
+      use_entanglement: useEntanglement,
+      seed,
+    }),
+  });
+}
+
+export async function trainSandbox({
+  datasetType,
+  noise,
+  currentParameters,
+  layers,
+  useEntanglement,
+  epochs,
+  learningRate = 0.14,
+  seed = 7,
+}) {
+  return request('/sandbox/train', {
+    method: 'POST',
+    body: JSON.stringify({
+      dataset_type: datasetType,
+      noise,
+      current_parameters: currentParameters,
+      layers,
+      use_entanglement: useEntanglement,
+      epochs,
+      learning_rate: learningRate,
+      seed,
+    }),
+  });
+}

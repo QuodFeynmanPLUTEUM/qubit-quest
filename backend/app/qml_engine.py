@@ -357,12 +357,17 @@ def train_quantum_circuit(
             best_basin = cand.copy()
 
     loss_history: List[float] = []
+    train_acc_history: List[float] = []
+    test_acc_history: List[float] = []
     shift = 0.06
     lr = max(0.08, min(0.45, float(learning_rate) * 2.0))
 
     for step in range(epochs):
-        loss, _ = compute_loss_and_accuracy(X_train, y_train, theta, layers, use_entanglement)
+        loss, train_acc_step = compute_loss_and_accuracy(X_train, y_train, theta, layers, use_entanglement)
         loss_history.append(round(loss, 4))
+        train_acc_history.append(round(train_acc_step, 4))
+        _, test_acc_step = compute_loss_and_accuracy(X_test, y_test, theta, layers, use_entanglement)
+        test_acc_history.append(round(test_acc_step, 4))
 
         # Parameter-shift gradient estimation
         grad = np.zeros_like(theta)
@@ -396,6 +401,8 @@ def train_quantum_circuit(
     _, test_acc = compute_loss_and_accuracy(X_test, y_test, theta, layers, use_entanglement)
     if not loss_history or abs(loss_history[-1] - final_loss) > 1e-4:
         loss_history.append(round(final_loss, 4))
+        train_acc_history.append(round(train_acc, 4))
+        test_acc_history.append(round(test_acc, 4))
 
     decision_grid = compute_decision_grid(
         params=theta,
@@ -420,6 +427,8 @@ def train_quantum_circuit(
     return {
         "updated_parameters": updated_params,
         "loss_history": loss_history,
+        "train_accuracy_history": train_acc_history,
+        "test_accuracy_history": test_acc_history,
         "train_accuracy": round(train_acc, 4),
         "test_accuracy": round(test_acc, 4),
         "grid_resolution": grid_resolution,
