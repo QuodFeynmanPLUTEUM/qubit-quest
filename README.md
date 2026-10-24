@@ -4,9 +4,7 @@ Reto 3 for Qiskit Global Hackaton - Train a Variational Quantum Classifier (VQC)
 What is Qubit Quest?
 A game where players teach a tiny quantum AI to recognize patterns, experimenting with how quantum circuits learn and how their design affects the result.
 
-A screen showing blue and orange dots scattered across a grid. Each color represents a different class. The player trains the ML model to separate them.
-
-The interesting part is that the AI isn't a conventional neural network. It uses a variational quantum classifier, a machine-learning model built from a parameterized quantum circuit.
+It uses a variational quantum classifier, a machine-learning model built from a parameterized quantum circuit.
 
 ---
 Qubit Quest is an interactive educational game that introduces players to quantum machine learning through pattern-recognition challenges.
